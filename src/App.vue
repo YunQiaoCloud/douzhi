@@ -1,13 +1,17 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
+  <div id="app" class="app">
     <router-view/>
+    <Tab></Tab>
   </div>
 </template>
 
 <script>
+import Tab from './components/Tab'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Tab
+  }
 }
 </script>
 
@@ -16,12 +20,9 @@ export default {
 @import url('../static/index.scss');
 @import url('../static/normalize.scss');
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app {
+  width: 100vw;
+  min-height: 100vh;
+  padding-bottom: 70px;
 }
 </style>
