@@ -6,6 +6,13 @@
       <p class="name">{{item.title}}</p>
       <p class="pubdate">{{item.mainland_pubdate}}</p>
     </div>
+    <h1 class="music-list-title">电影2</h1>
+    <div v-for="item in list2" :key="item.id2" class="music-list-item">
+      <div class="cover" :style="{ 'background-image': `url(${item.images.small})` }"></div>
+      <p class="name">{{item.title}}</p>
+      <p class="name">{{item.durations}}</p>
+      <p class="pubdate">{{item.original_title}}</p>
+    </div>
   </div>
 </template>
 
@@ -18,18 +25,38 @@ export default {
     return {
       list: [
         {
-        iod: '',
-        title: '',
-        mainland_pubdate: '',
-        images: {}
-      }
+          iod: '',
+          title: '',
+          mainland_pubdate: '',
+          images: {}
+        }
+      ],
+      list2: [
+        {
+          iod: '',
+          title: '',
+          durations: '',
+          original_title: '',
+          images: {}
+        }
       ]
     }
   },
- async mounted() {
-    const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=10&client=&udid=')
-    this.list = res.data.subjects
+  created: function() {
+    let url = '/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=5&client=&udid='
 
+    axios.get(url).then(res => {
+        console.log("获取信息成功");
+        console.log(res.data);
+        this.list2 = res.data.subjects
+        console.log("获取信息结束")
+    })
+  },
+  async mounted() {
+    console.log('1');
+    const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=3&client=&udid=')
+    this.list = res.data.subjects
+    console.log('2');
   }
 }
 </script>
