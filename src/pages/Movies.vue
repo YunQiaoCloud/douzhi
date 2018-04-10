@@ -1,38 +1,35 @@
 <template>
   <div class="music-list">
-    <h1 class="music-list-title">音乐</h1>
-    <div v-for="item in musicList" :key="item.token" class="music-list-item">
-      <div class="cover" :style="{ 'background-image': `url(${item.cover})` }"></div>
-      <p class="name">{{item.name}}</p>
-      <p class="location">{{item.location}}</p>
+    <h1 class="music-list-title">电影</h1>
+    <div v-for="item in list" :key="item.id" class="music-list-item">
+      <div class="cover" :style="{ 'background-image': `url(${item.images.small})` }"></div>
+      <p class="name">{{item.title}}</p>
+      <p class="pubdate">{{item.mainland_pubdate}}</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'HelloWorld',
+  name: 'Movies',
   data() {
     return {
-      musicList: [
+      list: [
         {
-        token: '111',
-        name: 'Mary Burgess',
-        gender: 'female', // male or
-        age: '21',
-        location: 'Steattle, USA',
-        cover: 'http://i0.sinaimg.cn/ent/y/2008-01-25/U107P28T3D1891962F326DT20080125115731.jpg'
-      },
-        {
-        token: '1112',
-        name: 'Mary Burgess',
-        gender: 'female', // male or
-        age: '21',
-        location: 'Steattle, USA',
-        cover: 'http://i0.sinaimg.cn/ent/y/2008-01-25/U107P28T3D1891962F326DT20080125115731.jpg'
+        iod: '',
+        title: '',
+        mainland_pubdate: '',
+        images: {}
       }
       ]
     }
+  },
+ async mounted() {
+    const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=10&client=&udid=')
+    this.list = res.data.subjects
+
   }
 }
 </script>
@@ -44,6 +41,7 @@ export default {
     min-height: 100vh;
     width: 100vw;
     overflow-x: hidden;
+    background-attachment: fixed;
     background-image: linear-gradient(212deg, rgba(0, 202, 157, 0.99), #aeefaa 69%, #fbffc1);
   }
 
@@ -79,7 +77,7 @@ export default {
       font-size: 24px;
     }
 
-    .location {
+    .pubdate {
       margin-top: 4px;
       margin-bottom: 4px;
       font-size: 16px;

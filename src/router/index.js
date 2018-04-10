@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Music from '@/pages/Music'
+import Movies from '@/pages/Movies'
 
 Vue.use(Router)
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Music',
-      component: Music
+      name: 'Movies',
+      component: Movies
     }
   ]
 })

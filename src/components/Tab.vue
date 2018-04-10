@@ -2,7 +2,7 @@
   <div class="tab-list">
     <a href="javascript:;" class="tab-item">
       <i class="icon icon-music"></i>
-      音乐
+      电影
     </a>
     <a href="javascript:;" class="tab-item">
       <i class="icon icon-music"></i>
@@ -18,7 +18,6 @@
 <script>
   export default {
     name: 'Tab',
-
   }
 </script>
 
