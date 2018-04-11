@@ -30,6 +30,7 @@ export default {
 
     const res = await axios.get(url)
     this.list = res.data.subjects
+    console.log(this.$store)
   }
 }
 </script>
