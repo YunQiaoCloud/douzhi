@@ -16,9 +16,9 @@
 </template>
 
 <script>
-export default {
-  name: 'Tab'
-}
+  export default {
+    name: 'Tab',
+  }
 </script>
 
 <style lang="scss">
