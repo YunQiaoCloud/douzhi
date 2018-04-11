@@ -7,6 +7,7 @@
 
 <script>
 import Tab from './components/Tab'
+
 export default {
   name: 'App',
   components: {
