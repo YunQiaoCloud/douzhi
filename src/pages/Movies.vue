@@ -1,7 +1,7 @@
 <template>
   <div class="movie-list">
     <h1 class="movie-list-title">电影</h1>
-    <div v-for="movie in list" :key="movie.id" class="movie-list-item">
+    <div v-for="movie in movies" :key="movie.id" class="movie-list-item">
       <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
       <p class="name">{{movie.title}}</p>
       <p class="pubdate">{{movie.mainland_pubdate}}</p>
@@ -10,27 +10,18 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   name: 'Movies',
-  data() {
-    return {
-      list: [
-        {
-          title: '',
-          mainland_pubdate: '',
-          images: {}
-        }
-      ]
+  computed: {
+    movies() {
+      // 计算属性返回 store 里的数据
+      return this.$store.state.movies
     }
   },
-  async mounted() {
-    const url = '/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=8&client=&udid='
-
-    const res = await axios.get(url)
-    this.list = res.data.subjects
-    console.log(this.$store)
+  async created() {
+    // store 执行获取 movies
+    this.$store.dispatch('getMovies')
   }
 }
 </script>
