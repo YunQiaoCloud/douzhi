@@ -16,7 +16,8 @@ export default {
   computed: {
     movies() {
       // 计算属性返回 store 里的数据
-      return this.$store.state.movies
+      console.log(this.$store)
+      return this.$store.state.movies.list
     }
   },
   async created() {
