@@ -26,6 +26,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     semi: 0,
+    'no-param-reassign': 0,
     'linebreak-style': 'off',
     'comma-dangle': 0,
     'space-before-function-paren': 2,

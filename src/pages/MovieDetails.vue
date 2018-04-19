@@ -1,11 +1,41 @@
 <template lang="html">
-  <div class="movie-list">
-    <h1 class="movie-list-title">电影</h1>
-    <div class="movie-list-item">
-      <div class="cover" :style="{ 'background-image': `url(${movieDetails.images.small})` }"></div>
-      <p class="name">{{movieDetails.title}}</p>
-      <p class="pubdate">{{movieDetails.mainland_pubdate}}</p>
-      <p>{{movieDetails.id}}</p>
+  <div class="movie-details">
+    <div class="movie-details-image">
+      <div class="cover"
+          :style="{ 'background-image': `url(${movieDetails.images.large})` }"></div>
+    </div>
+    <div class="movie-details-info">
+      <div class="movie-details-title">
+        <p class="movie-title">{{movieDetails.title}}</p>
+        <p class="movie-original-title">{{movieDetails.original_title}}</p>
+        <p class="movie-grades">{{movieDetails.rating.average}}</p>
+      </div>
+      <p class="movie-title">演员表</p>
+      <div class="casts-list">
+        <div v-for="cast in movieDetails.casts" :key="cast.id" class="cast">
+          <div class="cast-head"
+              :style="{ 'background-image': `url(${cast.avatars.small})` }"></div>
+          <p class="cast-name">{{cast.name}}</p>
+        </div>
+      </div>
+      <p class="movie-title">其他信息</p>
+      <div class="other-info">
+        <p class="movie-title">上映时间：
+          <span class="movie-original-title">{{movieDetails.mainland_pubdate}}</span>
+        </p>
+        <p class="movie-title">影片时长：
+          <span class="movie-original-title"
+                v-for="durations in movieDetails.durations" :key="durations.id">{{durations}}</span>
+        </p>
+        <p class="movie-title">原网页链接：
+          <a class="movie-original-title" :href="movieDetails.alt">点击查看</a>
+        </p>
+      </div>
+      <p class="movie-title">类型</p>
+      <div class="movie-genres">
+        <p class="movie-original-title"
+           v-for="genres in movieDetails.genres" :key="genres.id">{{genres}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -15,28 +45,21 @@ export default {
   name: 'MovieDetails',
   computed: {
     movieDetails() {
-      // 计算属性返回 store 里的数据
-      //console.log(this.$store.state.movies.list);
-      let movieDetails = this.$store.state.movies.list[0]
-      const array = this.$store.state.movies.list
-      let resultArr = []
-      for(let movie of array) {
-        console.log(movie);
-        console.log(movieDetails.id);
-        // if (movie.id = movieDetails.id) {
-        //   resultArr.push(movie)
-        //   // console.log(resultArr);
-        //   return movie
-        // }
-      }
-      // console.log(movie);
-      //resultArr.push(movie)
-      // array.forEach((id) => {
-      //   console.log(id.id)
-      //   resultArr.push(id)
-      // })
-      console.log(resultArr);
-      return movieDetails
+      // 获取当前的 params 里的 id
+      const movieId = this.$route.params.id
+      const movies = this.$store.state.movies.list
+
+      let i = 0
+
+      movies.forEach((movieDetails, index) => {
+        if (movieDetails.id === movieId) {
+          i = index
+        }
+      })
+
+      return movies[i]
+      // 如果没有符合的 id，使用默认第一个
+      // return movies[0]
     }
   },
   async created() {
@@ -47,52 +70,107 @@ export default {
 </script>
 
 <style lang="scss">
-.movie-list {
-  padding: 1px 16px;
+.movie-details {
   min-height: 100vh;
   width: 100vw;
-  overflow-x: hidden;
-  background-attachment: fixed;
-  background-image: linear-gradient(212deg, rgba(0, 202, 157, 0.99), #aeefaa 69%, #fbffc1);
 }
 
-.movie-list-title {
-  margin-top: 30px;
-  margin-bottom: 20px;
-  letter-spacing: 0.3px;
-  color: #fff;
-  font-weight: 400;
-  font-size: 34px;
-}
-
-.movie-list-item {
-  margin: 0 0 30px;
+.movie-details-image {
+  width: 100vw;
   height: 70vh;
-  border-radius: 13px;
-  overflow: hidden;
-  background-color: #fff;
-  text-align: center;
-  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.08);
 
   .cover {
     width: 100%;
-    height: 70%;
+    height: 100%;
     background-repeat: no-repeat;
     background-position: center 15%;
     background-size: cover;
   }
+}
 
-  .name {
-    margin-top: 45px;
-    margin-bottom: 4px;
-    font-size: 24px;
-  }
+.movie-details-info {
+  padding: 20px 10px;
 
-  .pubdate {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    font-size: 16px;
-    color: #9b9b9b;
+  .movie-details-title {
+    border-bottom: 1px solid #f5f5f5;
+    margin-top: -20px;
   }
 }
+
+.movie-title {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+  color: #333;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.movie-grades {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  color: #FE2A3C;
+}
+
+.movie-original-title {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  color: #9b9b9b;
+}
+
+.casts-list {
+  width: 100%;
+  height: 120px;
+
+  .cast {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin: 10px 10px 10px 0;
+  }
+
+  .cast-head {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center 15%;
+    background-size: cover;
+    border-radius: 50% 50%;
+  }
+
+  .cast-name {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+  }
+}
+
+.other-info {
+
+  p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  span {
+    margin-right: 10px;
+  }
+}
+
+.movie-genres {
+  overflow: hidden;
+
+  p {
+    float: left;
+    border: 1px solid #f5f5f5;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 5px 5px;
+  }
+}
+
 </style>
