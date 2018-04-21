@@ -41,25 +41,23 @@
 </template>
 
 <script>
+import lodash from 'lodash'
+
 export default {
   name: 'MovieDetails',
   computed: {
     movieDetails() {
       // 获取当前的 params 里的 id
       const movieId = this.$route.params.id
-      const movies = this.$store.state.movies.list
+      const moviesList = this.$store.state.movies.list
 
-      let i = 0
+      let index = lodash.findIndex(moviesList, ['id', movieId])
 
-      movies.forEach((movieDetails, index) => {
-        if (movieDetails.id === movieId) {
-          i = index
-        }
-      })
+      if (index === -1) {
+        index = 0
+      }
 
-      return movies[i]
-      // 如果没有符合的 id，使用默认第一个
-      // return movies[0]
+      return moviesList[index]
     }
   },
   async created() {
