@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//state
+// state
 const state = {
   list: [{
     title: '',
@@ -9,14 +9,16 @@ const state = {
   }]
 }
 
-//mutations
+// mutations
+/* eslint-disable no-param-reassign */
 const mutations = {
-  setMovies(state, movieList) {
-    state.list = movieList
+  setMovies(data, movieList) {
+    data.list = movieList
   }
 }
+/* eslint-enable no-param-reassign */
 
-//actions
+// actions
 const actions = {
   async getMovies({ commit }) {
     const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=10&client=&udid=')
