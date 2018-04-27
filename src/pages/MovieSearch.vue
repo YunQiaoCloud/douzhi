@@ -10,21 +10,13 @@
              placeholder="请输入电影名称">
     </div>
     <div class="movie-search-results">
-      <!-- 使用searchResults.images.xxxxx 会报错, searchResults.images应该是个对象啊，为什么-->
-      <!-- <div class="cover"
-          :style="{ 'background-image': `url(${searchResults.images.small})` }"></div> -->
-
-      <!-- searchResults.images可以读取，searchResults.images.small就会报错 -->
-      <p>{{ searchResults.images }}</p>
-
-
+      <div class="cover"
+          :style="{ 'background-image': `url(${searchResults.images.small})` }"></div>
       <p>{{ searchResults.title }}</p>
       <p>{{ searchResults.mainland_pubdate }}</p>
-      <div v-for="cast in searchResults.casts" :key="cast.id" class="cast">
-        <div class="cast-head"
-            :style="{ 'background-image': `url(${cast.avatars.small})` }"></div>
-        <p class="cast-name">{{cast.name}}</p>
-      </div>
+      <p class="movie-grades">{{ searchResults.rating.average }}</p>
+      <p class="movie-original-title"
+         v-for="genres in searchResults.genres" :key="genres.id">{{ genres }}</p>
     </div>
   </div>
 </template>
@@ -37,7 +29,14 @@ export default {
   data() {
     return {
       searchValue: '',
-      searchResults: []
+      searchResults: {
+        images: {
+          small: ''
+        },
+        rating: {
+          average: ''
+        }
+      }
     }
   },
   methods: {
@@ -50,13 +49,11 @@ export default {
 
       let index = _.findIndex(moviesList, ['title', keyWords])
 
-      // console.log(this, this.data, this.title, index, keyWords, moviesList[index])
-
       if (index === -1) {
         index = 0
       }
 
-      this.$set(this.$data, 'searchResults', moviesList[index])
+      this.$set(this, 'searchResults', moviesList[index])
       console.log(this);
     }
   },
@@ -86,6 +83,19 @@ export default {
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
+    }
+  }
+
+  .movie-search-results {
+    width: 30vw;
+    height: 15vh;
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-position: center 15%;
+      background-size: cover;
     }
   }
 </style>

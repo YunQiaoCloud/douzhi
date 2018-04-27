@@ -21,7 +21,7 @@ const mutations = {
 // actions
 const actions = {
   async getMovies({ commit }) {
-    const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=10&client=&udid=')
+    const res = await axios.get('/api/movie/in_theaters?apikey=0b2bdeda43b5688921839c8ecb20399b&city=%E5%8C%97%E4%BA%AC&start=0&count=999&client=&udid=')
     const movieList = res.data.subjects
     commit('setMovies', movieList)
   }
