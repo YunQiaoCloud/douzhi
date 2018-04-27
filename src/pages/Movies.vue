@@ -5,7 +5,7 @@
         <i class="icon-search"></i>
       </router-link>
     </h1>
-    <div v-for="movie in movies" :key="movie.id" class="movie-list-item">
+    <div v-if="movie.id" v-for="movie in movies" :key="movie.id" class="movie-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
       </router-link>
@@ -19,6 +19,13 @@
 
 export default {
   name: 'Movies',
+  data() {
+    return {
+      movie: {
+        id: null
+      }
+    }
+  },
   computed: {
     movies() {
       // 计算属性返回 store 里的数据
