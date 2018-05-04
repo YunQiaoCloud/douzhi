@@ -21,7 +21,8 @@
       <p class="movie-title">其他信息</p>
       <div class="other-info">
         <p class="movie-title">上映时间：
-          <span class="movie-original-title">{{movieDetails.mainland_pubdate}}</span>
+          <span class="movie-original-title"
+                v-for="pubdates in movieDetails.pubdates" :key="pubdates.id">{{pubdates}}</span>
         </p>
         <p class="movie-title">影片时长：
           <span class="movie-original-title"
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-import lodash from 'lodash'
+import _ from 'lodash'
 
 export default {
   name: 'MovieDetails',
@@ -50,19 +51,22 @@ export default {
       // 获取当前的 params 里的 id
       const movieId = this.$route.params.id
       const moviesList = this.$store.state.movies.list
+      const rankList = this.$store.state.ranks.list
+      const newArr = moviesList.concat(rankList)
 
-      let index = lodash.findIndex(moviesList, ['id', movieId])
+      let index = _.findIndex(newArr, ['id', movieId])
 
       if (index === -1) {
         index = 0
       }
-
-      return moviesList[index]
+      console.log(newArr[index]);
+      return newArr[index]
     }
   },
   async created() {
     // store 执行获取 movies
     this.$store.dispatch('getMovies')
+    this.$store.dispatch('getRanks')
   }
 }
 </script>
