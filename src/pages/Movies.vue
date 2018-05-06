@@ -1,9 +1,9 @@
 <template>
   <div class="movie-list">
     <h1 class="movie-list-title">电影
-      <router-link :to="{ name: 'MovieSearch' }">
+      <!-- <router-link :to="{ name: 'MovieSearch' }">
         <i class="icon-search"></i>
-      </router-link>
+      </router-link> -->
     </h1>
     <div v-if="movie.id" v-for="movie in movies" :key="movie.id" class="movie-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">

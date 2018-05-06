@@ -2,9 +2,12 @@ import axios from 'axios'
 
 // state
 const state = {
-  list: [{
+  listTop250: [{
     title: '',
-    mainland_pubdate: '',
+    images: {}
+  }],
+  listUS: [{
+    title: '',
     images: {}
   }]
 }
@@ -12,18 +15,26 @@ const state = {
 // mutations
 /* eslint-disable no-param-reassign */
 const mutations = {
-  setRanks(data, rankList) {
-    data.list = rankList
+  setRanksTop250(data, rankListTop250) {
+    data.listTop250 = rankListTop250
+  },
+  setRanksUS(data, rankListUS) {
+    data.listUS = rankListUS
   }
 }
 /* eslint-enable no-param-reassign */
 
 // actions
 const actions = {
-  async getRanks({ commit }) {
+  async getRanksTop250({ commit }) {
     const res = await axios.get('/api/movie/top250?apikey=0b2bdeda43b5688921839c8ecb20399b&count=250')
-    const rankList = res.data.subjects
-    commit('setRanks', rankList)
+    const rankListTop250 = res.data.subjects
+    commit('setRanksTop250', rankListTop250)
+  },
+  async getRanksUS({ commit }) {
+    const res = await axios.get('/api/movie/us_box?apikey=0b2bdeda43b5688921839c8ecb20399b&count=250')
+    const rankListUS = res.data.subjects
+    commit('setRanksUS', rankListUS)
   }
 }
 
