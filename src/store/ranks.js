@@ -12,6 +12,16 @@ const state = {
   }]
 }
 
+const getters = {
+  setRanksTop250(data) {
+    console.log(data)
+    return { title: '测试' }
+  },
+  setRanksUS() {
+    return { title: '测试2' }
+  }
+}
+
 // mutations
 /* eslint-disable no-param-reassign */
 const mutations = {
@@ -41,5 +51,6 @@ const actions = {
 export default {
   state,
   mutations,
-  actions
+  actions,
+  getters
 }

@@ -5,14 +5,16 @@
         <i class="icon-search"></i>
       </router-link>
     </h1>
+
     <div class="rank-tab">
       <ul>
         <li v-for="(tabName, index) in tabList"
-            :key="tabName.id"
-            v-on:click="switchTab(index)"
-            v-bind:class="{ active: index === active}">{{tabName}}</li>
+            :key="tabName"
+            @click="active = index"
+            :class="{ active: index === active}">{{tabName}}</li>
       </ul>
     </div>
+
     <div v-if="movie.id" v-for="movie in rankList" :key="movie.id" class="rank-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
@@ -31,7 +33,7 @@ export default {
   name: 'rankList',
   data() {
     return {
-      active: 0,
+      active: -1,
       tabList: [
         'Top250',
         '口碑榜',
@@ -50,20 +52,24 @@ export default {
       return this.$store.state.ranks.listTop250
     }
   },
-  async created() {
-    // store 执行获取 rankList
-    this.$store.dispatch('getRanksTop250')
-    this.$store.dispatch('getRanksUS')
-  },
-  methods: {
-    switchTab(index) {
-      this.active = index
-      const rankListUS = this.$store.state.ranks.listUS
-      if (this.active === 2) {
-        this.$set(this, 'rankList', rankListUS)
-        console.log(this);
+  watch: {
+    active(index) {
+      // 监听到切换了 index
+      console.log(index)
+
+      // 根据 index 获取不同的数据
+      switch (index) {
+        case 1:
+          this.$store.dispatch('getRanksUS')
+          break
+        default:
+          this.$store.dispatch('getRanksUS')
       }
     }
+  },
+  mounted() {
+    this.active = 0
+    console.log(this.$store.getters.setRanksTop250)
   }
 }
 </script>
