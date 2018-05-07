@@ -3,12 +3,13 @@
     <div class="movie-search-title">
       <p><span class="movie-search-back" v-on:click="back"></span>搜索电影</p>
     </div>
+
     <div class="movie-search-input">
       <input type="text"
-             @keyup.enter="onSearch"
              v-model="searchValue"
              placeholder="请输入电影名称">
     </div>
+
     <div class="movie-search-results" v-if="searchResults.id">
       <router-link :to="{ name: 'MovieDetails', params: { id: searchResults.id } }">
         <div class="search-results-image"
@@ -48,22 +49,23 @@ export default {
       }
     }
   },
-  methods: {
-    back() {
-      this.$router.go(-1)
-    },
-    onSearch() {
+  watch: {
+    searchValue: _.debounce(function(value) {
       const moviesList = this.$store.state.movies.list
-      const keyWords = this.searchValue
 
-      let index = _.findIndex(moviesList, ['title', keyWords])
+      let index = _.findIndex(moviesList, ['title', value])
 
       if (index === -1) {
         index = 0
       }
 
       this.$set(this, 'searchResults', moviesList[index])
-    }
+    }, 1000)
+  },
+  methods: {
+    back() {
+      this.$router.go(-1)
+    },
   },
   async created() {
     // store 执行获取 movies
