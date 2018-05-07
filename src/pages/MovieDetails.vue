@@ -2,19 +2,19 @@
   <div class="movie-details">
     <div class="movie-details-image">
       <div class="cover"
-          :style="{ 'background-image': `url(${movieDetails.images.large})` }"></div>
+          :style="{ 'background-image': `url(${$_.get(movieDetails.images, 'large')})` }"></div>
     </div>
     <div class="movie-details-info">
       <div class="movie-details-title">
         <p class="movie-title">{{movieDetails.title}}</p>
         <p class="movie-original-title">{{movieDetails.original_title}}</p>
-        <p class="movie-grades">{{movieDetails.rating.average}}</p>
+        <p class="movie-grades">{{$_.get(movieDetails.rating, 'average')}}</p>
       </div>
       <p class="movie-title">演员表</p>
       <div class="casts-list">
         <div v-for="cast in movieDetails.casts" :key="cast.id" class="cast">
           <div class="cast-head"
-              :style="{ 'background-image': `url(${cast.avatars.small})` }"></div>
+              :style="{ 'background-image': `url(${$_.get(cast.avatars, 'small')})` }"></div>
           <p class="cast-name">{{cast.name}}</p>
         </div>
       </div>
@@ -48,25 +48,16 @@ export default {
   name: 'MovieDetails',
   computed: {
     movieDetails() {
-      // 获取当前的 params 里的 id
-      const movieId = this.$route.params.id
-      const moviesList = this.$store.state.movies.list
-      const rankList = this.$store.state.ranks.list
-      const newArr = moviesList.concat(rankList)
+      // 当前电影
+      const currentMovie = this.$store.state.movies.currentMovie
 
-      let index = _.findIndex(newArr, ['id', movieId])
-
-      if (index === -1) {
-        index = 0
-      }
-      console.log(newArr[index]);
-      return newArr[index]
+      return currentMovie
     }
   },
   async created() {
-    // store 执行获取 movies
-    this.$store.dispatch('getMovies')
-    this.$store.dispatch('getRanks')
+    // 获取详情
+    const movieId = this.$route.params.id
+    this.$store.dispatch('getMovie', movieId)
   }
 }
 </script>
