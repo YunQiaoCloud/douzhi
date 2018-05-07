@@ -48,13 +48,19 @@ export default {
   name: 'MovieDetails',
   computed: {
     movieDetails() {
+      const movieId = this.$route.params.id
       // 当前电影
       const currentMovie = this.$store.state.movies.currentMovie
+
+      if (movieId !== currentMovie.id) {
+        return {}
+      }
 
       return currentMovie
     }
   },
   async created() {
+    console.log(this.$_.get, 'get')
     // 获取详情
     const movieId = this.$route.params.id
     this.$store.dispatch('getMovie', movieId)
