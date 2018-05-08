@@ -9,7 +9,8 @@ const state = {
   }],
   currentMovie: {
 
-  }
+  },
+  searchMovie: []
 }
 
 // mutations
@@ -20,7 +21,9 @@ const mutations = {
   },
   setCurrentMovie(data, currentMovie) {
     data.currentMovie = currentMovie
-    console.log(currentMovie)
+  },
+  setSearchMovie(data, searchMovie) {
+    data.searchMovie = searchMovie.subjects
   }
 }
 /* eslint-enable no-param-reassign */
@@ -36,6 +39,11 @@ const actions = {
   async getMovie({ commit }, id) {
     const res = await axios.get(`/api/movie/subject/${id}`)
     commit('setCurrentMovie', res.data)
+  },
+
+  async getSearchMovie({ commit }, searchValue) {
+    const res = await axios.get(`/api/movie/search?q=${searchValue}&count=999`)
+    commit('setSearchMovie', res.data)
   }
 }
 

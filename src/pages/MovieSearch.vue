@@ -10,21 +10,24 @@
              placeholder="请输入电影名称">
     </div>
 
-    <div class="movie-search-results" v-if="searchResults.id">
-      <router-link :to="{ name: 'MovieDetails', params: { id: searchResults.id } }">
+    <div v-for="movie in searchResults"
+        :key="movie.id"
+        v-if="movie.id"
+        class="movie-search-results">
+      <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="search-results-image"
-            :style="{ 'background-image': `url(${searchResults.images.small})` }">
+            :style="{ 'background-image': `url(${movie.images.small})` }">
         </div>
       </router-link>
       <div class="search-results-info">
-        <router-link :to="{ name: 'MovieDetails', params: { id: searchResults.id } }">
+        <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
           <h2>
-            {{ searchResults.title }}
-            <i class="movie-grades">{{ searchResults.rating.average }}</i>
+            {{ movie.title }}
+            <i class="movie-grades">{{ movie.rating.average }}</i>
           </h2>
         </router-link>
         <p class="movie-genres"
-        v-for="genres in searchResults.genres" :key="genres.id">{{ genres }}</p>
+        v-for="genres in movie.genres" :key="genres.id">{{ genres }}</p>
       </div>
     </div>
   </div>
@@ -37,39 +40,23 @@ export default {
   name: 'MovieSearch',
   data() {
     return {
-      searchValue: '',
-      searchResults: {
-        images: {
-          small: ''
-        },
-        rating: {
-          average: ''
-        },
-        id: null,
-      }
+      searchValue: ''
+    }
+  },
+  computed: {
+    searchResults() {
+      return this.$store.state.movies.searchMovie
     }
   },
   watch: {
     searchValue: _.debounce(function movieSearch(value) {
-      const moviesList = this.$store.state.movies.list
-
-      let index = _.findIndex(moviesList, ['title', value])
-
-      if (index === -1) {
-        index = 0
-      }
-
-      this.$set(this, 'searchResults', moviesList[index])
+      this.$store.dispatch('getSearchMovie', value)
     }, 1000)
   },
   methods: {
     back() {
       this.$router.go(-1)
     },
-  },
-  async created() {
-    // store 执行获取 movies
-    this.$store.dispatch('getMovies')
   }
 }
 </script>
@@ -117,7 +104,7 @@ export default {
   .movie-search-results {
     width: 90%;
     height: 80px;
-    margin: 0 5%;
+    margin: 20px 5%;
 
     .search-results-image {
       width: 80px;
@@ -134,7 +121,11 @@ export default {
       float: left;
 
       h2 {
+        width: 100%;
         margin: 5px 0;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
       }
 
       .movie-grades {

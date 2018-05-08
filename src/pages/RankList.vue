@@ -58,7 +58,6 @@ export default {
           return this.$store.getters.setRanksTop250
           break;
         case 1:
-          console.log(this.$store.getters.setRanksWeekly);
           return this.$store.getters.setRanksWeekly
           break;
         case 2:
@@ -68,7 +67,7 @@ export default {
           return this.$store.getters.setRanksNew
           break;
         default:
-          console.log('123');
+          return this.$store.getters.setRanksTop250
       }
     }
   },
