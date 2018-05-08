@@ -2,22 +2,10 @@ import axios from 'axios'
 
 // state
 const state = {
-  listTop250: [{
-    title: '',
-    images: {}
-  }],
-  listWeekly: [{
-    title: '',
-    images: {}
-  }],
-  listUS: [{
-    title: '',
-    images: {}
-  }],
-  listNew: [{
-    title: '',
-    images: {}
-  }]
+  listTop250: [],
+  listWeekly: [],
+  listUS: [],
+  listNew: []
 }
 
 const getters = {
