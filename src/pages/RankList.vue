@@ -41,15 +41,35 @@ export default {
         '新片榜'
       ],
       movie: {
-        id: null
+        images: {
+          small: ''
+        },
+        rating: {
+          average: ''
+        },
+        id: null,
       }
     }
   },
   computed: {
     rankList() {
-      console.log(this.$store);
-      // 计算属性返回 store 里的数据
-      return this.$store.state.ranks.listTop250
+      switch (this.active) {
+        case 0:
+          return this.$store.getters.setRanksTop250
+          break;
+        case 1:
+          console.log(this.$store.getters.setRanksWeekly);
+          return this.$store.getters.setRanksWeekly
+          break;
+        case 2:
+          return this.$store.getters.setRanksUS
+          break
+        case 3:
+          return this.$store.getters.setRanksNew
+          break;
+        default:
+          console.log('123');
+      }
     }
   },
   watch: {
@@ -59,17 +79,25 @@ export default {
 
       // 根据 index 获取不同的数据
       switch (index) {
+        case 0:
+          this.$store.dispatch('getRanksTop250')
+          break;
         case 1:
+          this.$store.dispatch('getRanksWeekly')
+          break;
+        case 2:
           this.$store.dispatch('getRanksUS')
           break
+        case 3:
+          this.$store.dispatch('getRanksNew')
+          break;
         default:
-          this.$store.dispatch('getRanksUS')
+          console.log('123');
       }
     }
   },
   mounted() {
     this.active = 0
-    console.log(this.$store.getters.setRanksTop250)
   }
 }
 </script>
@@ -156,6 +184,10 @@ export default {
       overflow: hidden;
 
       .name {
+        width: 75%;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
         float: left;
       }
 

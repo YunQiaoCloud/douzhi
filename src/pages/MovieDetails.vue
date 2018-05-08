@@ -4,13 +4,16 @@
       <div class="cover"
           :style="{ 'background-image': `url(${$_.get(movieDetails.images, 'large')})` }"></div>
     </div>
+
     <div class="movie-details-info">
       <div class="movie-details-title">
         <p class="movie-title">{{movieDetails.title}}</p>
         <p class="movie-original-title">{{movieDetails.original_title}}</p>
         <p class="movie-grades">{{$_.get(movieDetails.rating, 'average')}}</p>
       </div>
+
       <p class="movie-title">演员表</p>
+
       <div class="casts-list">
         <div v-for="cast in movieDetails.casts" :key="cast.id" class="cast">
           <div class="cast-head"
@@ -18,21 +21,23 @@
           <p class="cast-name">{{cast.name}}</p>
         </div>
       </div>
+
       <p class="movie-title">其他信息</p>
+
       <div class="other-info">
-        <p class="movie-title">上映时间：
-          <span class="movie-original-title"
-                v-for="pubdates in movieDetails.pubdates" :key="pubdates.id">{{pubdates}}</span>
-        </p>
-        <p class="movie-title">影片时长：
-          <span class="movie-original-title"
-                v-for="durations in movieDetails.durations" :key="durations.id">{{durations}}</span>
+        <p class="movie-title">上映年份：
+          <span class="movie-original-title">{{movieDetails.year}}</span>
         </p>
         <p class="movie-title">原网页链接：
           <a class="movie-original-title" :href="movieDetails.alt">点击查看</a>
         </p>
+        <p class="movie-title">影片简介：
+          <span class="movie-original-title">{{movieDetails.summary}}</span>
+        </p>
       </div>
+
       <p class="movie-title">类型</p>
+
       <div class="movie-genres">
         <p class="movie-original-title"
            v-for="genres in movieDetails.genres" :key="genres.id">{{genres}}</p>
@@ -51,7 +56,7 @@ export default {
       const movieId = this.$route.params.id
       // 当前电影
       const currentMovie = this.$store.state.movies.currentMovie
-
+      
       if (movieId !== currentMovie.id) {
         return {}
       }
@@ -125,8 +130,8 @@ export default {
 
   .cast {
     float: left;
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
     margin: 10px 10px 10px 0;
   }
 
@@ -151,11 +156,16 @@ export default {
 .other-info {
 
   p {
-    font-size: 16px;
+    font-size: 14px;
     margin: 10px 0;
   }
 
+  a {
+    font-size: 14px;
+  }
+
   span {
+    font-size: 14px;
     margin-right: 10px;
   }
 }

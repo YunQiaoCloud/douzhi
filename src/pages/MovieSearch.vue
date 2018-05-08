@@ -50,7 +50,7 @@ export default {
     }
   },
   watch: {
-    searchValue: _.debounce(function(value) {
+    searchValue: _.debounce(function movieSearch(value) {
       const moviesList = this.$store.state.movies.list
 
       let index = _.findIndex(moviesList, ['title', value])
