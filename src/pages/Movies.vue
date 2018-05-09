@@ -1,16 +1,17 @@
 <template>
   <div class="movie-list">
-    <h1 class="movie-list-title">电影
-      <!-- <router-link :to="{ name: 'MovieSearch' }">
-        <i class="icon-search"></i>
-      </router-link> -->
+    <h1 class="movie-list-title">
+      电影
     </h1>
+
     <div v-if="movie.id" v-for="movie in movies" :key="movie.id" class="movie-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
-        <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
+        <div class="cover"
+             :style="{ 'background-image': `url(${ $_.get(movie.images, 'small') })` }">
+        </div>
       </router-link>
-      <p class="name">{{movie.title}}</p>
-      <p class="pubdate">{{movie.mainland_pubdate}}</p>
+      <p class="name">{{ movie.title }}</p>
+      <p class="pubdate">{{ movie.mainland_pubdate }}</p>
     </div>
   </div>
 </template>

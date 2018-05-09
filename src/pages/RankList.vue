@@ -17,11 +17,12 @@
 
     <div v-if="movie.id" v-for="movie in rankList" :key="movie.id" class="rank-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
-        <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
+        <div class="cover"
+             :style="{ 'background-image': `url(${ $_.get(movie.images, 'small') })` }"></div>
       </router-link>
       <p class="info">
-        <span class="name">{{movie.title}}</span>
-        <i class="grades">{{movie.rating.average}}</i>
+        <span class="name">{{ movie.title }}</span>
+        <i class="grades">{{ $_.get(movie.rating, 'average') }}</i>
       </p>
     </div>
   </div>
@@ -44,30 +45,24 @@ export default {
   },
   computed: {
     rankList() {
+      const getters = this.$store.getters
+
       switch (this.active) {
-        case 0:
-          return this.$store.getters.setRanksTop250
         case 1:
-          return this.$store.getters.setRanksWeekly
+          return getters.setRanksWeekly
         case 2:
-          return this.$store.getters.setRanksUS
+          return getters.setRanksUS
         case 3:
-          return this.$store.getters.setRanksNew
+          return getters.setRanksNew
         default:
-          return this.$store.getters.setRanksTop250
+          return getters.setRanksTop250
       }
     }
   },
   watch: {
     active(index) {
-      // 监听到切换了 index
-      console.log(index)
-
       // 根据 index 获取不同的数据
       switch (index) {
-        case 0:
-          this.$store.dispatch('getRanksTop250')
-          break;
         case 1:
           this.$store.dispatch('getRanksWeekly')
           break;
@@ -78,7 +73,7 @@ export default {
           this.$store.dispatch('getRanksNew')
           break;
         default:
-          console.log('123');
+          this.$store.dispatch('getRanksTop250')
       }
     }
   },

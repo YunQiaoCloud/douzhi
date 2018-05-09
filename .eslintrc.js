@@ -27,7 +27,7 @@ module.exports = {
   rules: {
     semi: 0,
     "no-underscore-dangle": 0,
-    'no-console': 'off',
+    'no-console': 'error',
     'no-param-reassign': 0,
     'linebreak-style': 'off',
     'comma-dangle': 0,

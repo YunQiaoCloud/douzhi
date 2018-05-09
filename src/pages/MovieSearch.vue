@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="movie-search">
     <div class="movie-search-title">
-      <p><span class="movie-search-back" v-on:click="back"></span>搜索电影</p>
+      <router-link :to="{ name: 'RankList' }">
+        <p><span class="movie-search-back"></span>搜索电影</p>
+      </router-link>
     </div>
 
     <div class="movie-search-input">
@@ -14,18 +16,21 @@
          :key="movie.id"
          v-if="movie.id"
          class="movie-search-results">
+
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="search-results-image"
-            :style="{ 'background-image': `url(${movie.images.small})` }">
+            :style="{ 'background-image': `url(${ $_.get(movie.images, 'small') })` }">
         </div>
       </router-link>
+
       <div class="search-results-info">
         <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
           <h2>
             {{ movie.title }}
           </h2>
-          <i class="movie-grades">{{ movie.rating.average }}</i>
+          <i class="movie-grades">{{ $_.get(movie.rating, 'average') }}</i>
         </router-link>
+
         <p class="movie-genres"
         v-for="genres in movie.genres" :key="genres.id">{{ genres }}</p>
       </div>
@@ -50,17 +55,10 @@ export default {
   },
   watch: {
     searchValue: _.debounce(function movieSearch(value) {
-      if (value === '') {
-        return
-      }
+      if (!value) { return }
 
       this.$store.dispatch('getSearchMovie', value)
     }, 1000)
-  },
-  methods: {
-    back() {
-      this.$router.go(-1)
-    }
   }
 }
 </script>
