@@ -1,13 +1,13 @@
 <template>
   <div class="tab-list">
-    <a href="javascript:;" class="tab-item">
+    <router-link class="tab-item" :to="{ name: 'Movies' }">
       <i class="icon icon-music"></i>
       电影
-    </a>
-    <a href="javascript:;" class="tab-item">
+    </router-link>
+    <router-link class="tab-item" :to="{ name: 'RankList' }">
       <i class="icon icon-music"></i>
-      书籍
-    </a>
+      排行榜
+    </router-link>
     <a href="javascript:;" class="tab-item">
       <i class="icon icon-music"></i>
       我的
