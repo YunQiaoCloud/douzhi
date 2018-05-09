@@ -1,7 +1,11 @@
 <template>
   <div class="movie-list">
-    <h1 class="movie-list-title">电影</h1>
-    <div v-for="movie in movies" :key="movie.id" class="movie-list-item">
+    <h1 class="movie-list-title">电影
+      <!-- <router-link :to="{ name: 'MovieSearch' }">
+        <i class="icon-search"></i>
+      </router-link> -->
+    </h1>
+    <div v-if="movie.id" v-for="movie in movies" :key="movie.id" class="movie-list-item">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="cover" :style="{ 'background-image': `url(${movie.images.small})` }"></div>
       </router-link>
@@ -15,6 +19,13 @@
 
 export default {
   name: 'Movies',
+  data() {
+    return {
+      movie: {
+        id: null
+      }
+    }
+  },
   computed: {
     movies() {
       // 计算属性返回 store 里的数据
@@ -46,6 +57,18 @@ export default {
     color: #fff;
     font-weight: 400;
     font-size: 34px;
+    line-height: 30px;
+
+    .icon-search {
+      float: right;
+      display: flex;
+      width: 50px;
+      height: 30px;
+      background-image: url('../assets/search.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
   }
 
   .movie-list-item {
