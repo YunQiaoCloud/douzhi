@@ -11,9 +11,9 @@
     </div>
 
     <div v-for="movie in searchResults"
-        :key="movie.id"
-        v-if="movie.id"
-        class="movie-search-results">
+         :key="movie.id"
+         v-if="movie.id"
+         class="movie-search-results">
       <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
         <div class="search-results-image"
             :style="{ 'background-image': `url(${movie.images.small})` }">
@@ -23,8 +23,8 @@
         <router-link :to="{ name: 'MovieDetails', params: { id: movie.id } }">
           <h2>
             {{ movie.title }}
-            <i class="movie-grades">{{ movie.rating.average }}</i>
           </h2>
+          <i class="movie-grades">{{ movie.rating.average }}</i>
         </router-link>
         <p class="movie-genres"
         v-for="genres in movie.genres" :key="genres.id">{{ genres }}</p>
@@ -50,13 +50,17 @@ export default {
   },
   watch: {
     searchValue: _.debounce(function movieSearch(value) {
+      if (value === '') {
+        return
+      }
+
       this.$store.dispatch('getSearchMovie', value)
     }, 1000)
   },
   methods: {
     back() {
       this.$router.go(-1)
-    },
+    }
   }
 }
 </script>
@@ -117,21 +121,25 @@ export default {
     }
 
     .search-results-info {
+      width: 70%;
       margin-left: 10px;
       float: left;
 
       h2 {
-        width: 100%;
+        width: 85%;
         margin: 5px 0;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
+        float: left;
       }
 
       .movie-grades {
-        margin-left: 5px;
+        margin: 5px 0;
         font-size: 16px;
+        font-weight: bold;
         color: #FE2A3C;
+        float: right;
       }
 
       .movie-genres {

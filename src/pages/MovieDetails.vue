@@ -47,8 +47,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-
 export default {
   name: 'MovieDetails',
   computed: {
@@ -56,7 +54,7 @@ export default {
       const movieId = this.$route.params.id
       // 当前电影
       const currentMovie = this.$store.state.movies.currentMovie
-      
+
       if (movieId !== currentMovie.id) {
         return {}
       }
@@ -65,7 +63,6 @@ export default {
     }
   },
   async created() {
-    console.log(this.$_.get, 'get')
     // 获取详情
     const movieId = this.$route.params.id
     this.$store.dispatch('getMovie', movieId)
@@ -93,7 +90,7 @@ export default {
 }
 
 .movie-details-info {
-  padding: 20px 10px;
+  padding: 20px 2vw;
 
   .movie-details-title {
     border-bottom: 1px solid #f5f5f5;
@@ -102,12 +99,13 @@ export default {
 }
 
 .movie-title {
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   letter-spacing: 0.3px;
   color: #333;
   font-weight: 400;
   font-size: 30px;
+  line-height: 35px;
 }
 
 .movie-grades {
@@ -130,9 +128,9 @@ export default {
 
   .cast {
     float: left;
-    width: 75px;
-    height: 75px;
-    margin: 10px 10px 10px 0;
+    width: 20vw;
+    height: 20vw;
+    margin: 10px 2vw
   }
 
   .cast-head {
@@ -166,7 +164,6 @@ export default {
 
   span {
     font-size: 14px;
-    margin-right: 10px;
   }
 }
 

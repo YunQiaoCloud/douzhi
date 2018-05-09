@@ -39,16 +39,7 @@ export default {
         '口碑榜',
         '北美票房榜',
         '新片榜'
-      ],
-      movie: {
-        images: {
-          small: ''
-        },
-        rating: {
-          average: ''
-        },
-        id: null,
-      }
+      ]
     }
   },
   computed: {
@@ -56,16 +47,12 @@ export default {
       switch (this.active) {
         case 0:
           return this.$store.getters.setRanksTop250
-          break;
         case 1:
           return this.$store.getters.setRanksWeekly
-          break;
         case 2:
           return this.$store.getters.setRanksUS
-          break
         case 3:
           return this.$store.getters.setRanksNew
-          break;
         default:
           return this.$store.getters.setRanksTop250
       }

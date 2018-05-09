@@ -16,7 +16,7 @@ const getters = {
     const listWeeklyArray = data.listWeekly
     const listWeekly = []
 
-    listWeeklyArray.forEach(item => {
+    listWeeklyArray.forEach((item) => {
       listWeekly.push(item.subject)
     })
 
@@ -26,7 +26,7 @@ const getters = {
     const listUSArray = data.listUS
     const listUS = []
 
-    listUSArray.forEach(item => {
+    listUSArray.forEach((item) => {
       listUS.push(item.subject)
     })
 

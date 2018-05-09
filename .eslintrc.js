@@ -26,6 +26,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     semi: 0,
+    "no-underscore-dangle": 0,
     'no-console': 'off',
     'no-param-reassign': 0,
     'linebreak-style': 'off',
